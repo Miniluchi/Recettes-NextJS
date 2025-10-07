@@ -1,0 +1,73 @@
+import { getRecipeById } from "@/app/recipes/utils";
+import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ChefHat, Clock, Users } from "lucide-react";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+
+export default async function RecipeByIdPage({
+  params,
+}: {
+  params: { recipeID: string };
+}) {
+  const recipe = await getRecipeById(parseInt(params.recipeID, 10));
+  if (!recipe) {
+    notFound();
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-4xl">{recipe.title}</CardTitle>
+            <CardDescription className="text-base">
+              {recipe.description}
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="space-y-6">
+            <div className="relative h-96 w-full overflow-hidden rounded-lg">
+              <Image
+                src={recipe.image}
+                alt={recipe.title}
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            <div className="flex flex-wrap gap-4">
+              <Badge
+                variant="secondary"
+                className="flex items-center gap-2 px-4 py-2"
+              >
+                <Clock className="h-4 w-4" />
+                {recipe.prepTime} min
+              </Badge>
+              <Badge
+                variant="secondary"
+                className="flex items-center gap-2 px-4 py-2"
+              >
+                <ChefHat className="h-4 w-4" />
+                {recipe.difficulty}
+              </Badge>
+              <Badge
+                variant="secondary"
+                className="flex items-center gap-2 px-4 py-2"
+              >
+                <Users className="h-4 w-4" />
+                {recipe.servings} personnes
+              </Badge>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}

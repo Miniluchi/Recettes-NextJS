@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "title": "Pâtes à la carbonara",
+    "description": "Un grand classique italien avec des œufs, du parmesan et des lardons croustillants",
+    "image": "/pates-carbo.webp",
+    "prepTime": 20,
+    "difficulty": "facile",
+    "servings": 4
+  },
+  {
+    "id": 2,
+    "title": "Poulet rôti aux herbes",
+    "description": "Poulet tendre parfumé au thym, romarin et ail, accompagné de légumes rôtis",
+    "image": "/poulet-herbes.jpg",
+    "prepTime": 90,
+    "difficulty": "moyen",
+    "servings": 6
+  },
+  {
+    "id": 3,
+    "title": "Salade César",
+    "description": "Salade croquante avec poulet grillé, croûtons, parmesan et sauce César maison",
+    "image": "/salade-cesar.jpg",
+    "prepTime": 15,
+    "difficulty": "facile",
+    "servings": 2
+  },
+  {
+    "id": 4,
+    "title": "Boeuf bourguignon",
+    "description": "Plat mijoté traditionnel français avec bœuf, vin rouge, carottes et champignons",
+    "image": "/boeuf-bourguignon.jpg",
+    "prepTime": 180,
+    "difficulty": "difficile",
+    "servings": 6
+  },
+  {
+    "id": 5,
+    "title": "Tarte aux pommes",
+    "description": "Tarte classique avec compote de pommes et lamelles de pommes caramélisées",
+    "image": "/tarte-pomme.jpg",
+    "prepTime": 60,
+    "difficulty": "moyen",
+    "servings": 8
+  },
+  {
+    "id": 6,
+    "title": "Risotto aux champignons",
+    "description": "Riz crémeux cuit lentement avec champignons, parmesan et vin blanc",
+    "image": "/risotto-champignons.webp",
+    "prepTime": 40,
+    "difficulty": "moyen",
+    "servings": 4
+  },
+  {
+    "id": 7,
+    "title": "Quiche lorraine",
+    "description": "Tarte salée garnie de lardons, crème fraîche et œufs sur pâte brisée",
+    "image": "/quiche-lorraine.jpg",
+    "prepTime": 50,
+    "difficulty": "facile",
+    "servings": 6
+  },
+  {
+    "id": 8,
+    "title": "Ratatouille",
+    "description": "Mélange de légumes méditerranéens mijotés : aubergines, courgettes, poivrons et tomates",
+    "image": "/Ratatouille.jpg",
+    "prepTime": 45,
+    "difficulty": "facile",
+    "servings": 4
+  },
+  {
+    "id": 9,
+    "title": "Tiramisu",
+    "description": "Dessert italien avec biscuits imbibés de café, mascarpone et cacao",
+    "image": "/tiramisu.jpg",
+    "prepTime": 30,
+    "difficulty": "facile",
+    "servings": 8
+  },
+  {
+    "id": 10,
+    "title": "Soupe à l'oignon gratinée",
+    "description": "Soupe traditionnelle française avec oignons caramélisés, bouillon et fromage gratiné",
+    "image": "/soupe-oignons.jpg",
+    "prepTime": 60,
+    "difficulty": "moyen",
+    "servings": 4
+  }
+]
