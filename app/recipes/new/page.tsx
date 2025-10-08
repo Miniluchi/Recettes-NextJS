@@ -1,6 +1,6 @@
 "use client";
 
-import { Recipe } from "@/app/types";
+import { createRecipe } from "@/app/recipes/utils";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Difficulty } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -29,34 +30,35 @@ export default function NewRecipePage() {
     description: "",
     image: "",
     prepTime: "",
-    difficulty: "" as Recipe["difficulty"] | "",
+    difficulty: "" as Difficulty | "",
     servings: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Validation basique
-    if (!formData.title || !formData.description || !formData.difficulty) {
+    if (!formData.title || !formData.difficulty) {
       alert("Veuillez remplir tous les champs obligatoires");
       return;
     }
 
-    const newRecipe: Recipe = {
-      id: Date.now(), // ID temporaire
-      title: formData.title,
-      description: formData.description,
-      image: formData.image || "/pates-carbo.webp",
-      prepTime: parseInt(formData.prepTime) || 0,
-      difficulty: formData.difficulty as Recipe["difficulty"],
-      servings: parseInt(formData.servings) || 1,
-    };
+    try {
+      await createRecipe({
+        title: formData.title,
+        description: formData.description || undefined,
+        image: formData.image || "/pates-carbo.webp",
+        prepTime: parseInt(formData.prepTime) || 0,
+        difficulty: formData.difficulty as Difficulty,
+        servings: parseInt(formData.servings) || 1,
+      });
 
-    console.log("Nouvelle recette:", newRecipe);
-    // TODO: Ajouter la logique pour sauvegarder la recette
-
-    // Redirection vers la page des recettes
-    router.push("/recipes");
+      // Redirection vers la page des recettes
+      router.push("/recipes");
+    } catch (error) {
+      console.error("Erreur lors de la création de la recette:", error);
+      alert("Erreur lors de la création de la recette");
+    }
   };
 
   const handleChange = (field: keyof typeof formData, value: string) => {

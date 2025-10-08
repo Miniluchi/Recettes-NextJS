@@ -1,63 +1,94 @@
-import { Recipe, RecipeDto } from "../types";
+"use server";
 
-const API_BASE_URL = "http://localhost:3000/api/recipes";
+import { prisma } from "@/lib/prisma";
+import { Difficulty } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 // Récupérer toutes les recettes
-export async function getAllRecipes(): Promise<Recipe[]> {
-  const response = await fetch(API_BASE_URL, {
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
+export async function getAllRecipes() {
+  try {
+    const recipes = await prisma.recipe.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+    return recipes;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des recettes:", error);
     throw new Error("Erreur lors de la récupération des recettes");
   }
-
-  const data = await response.json();
-  return data.recipes;
 }
 
 // Récupérer une recette par ID
-export async function getRecipeById(id: number): Promise<Recipe | null> {
-  const response = await fetch(`${API_BASE_URL}/${id}`, {
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    if (response.status === 404) return null;
+export async function getRecipeById(id: string) {
+  try {
+    const recipe = await prisma.recipe.findUnique({
+      where: { id },
+    });
+    return recipe;
+  } catch (error) {
+    console.error("Erreur lors de la récupération de la recette:", error);
     throw new Error("Erreur lors de la récupération de la recette");
   }
-
-  const data = await response.json();
-  return data.recipe;
 }
 
 // Ajouter une nouvelle recette
-export async function addNewRecipe(newRecipe: RecipeDto): Promise<Recipe> {
-  const response = await fetch(API_BASE_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newRecipe),
-  });
-
-  if (!response.ok) {
-    throw new Error("Erreur lors de l'ajout de la recette");
+export async function createRecipe(data: {
+  title: string;
+  description?: string;
+  image: string;
+  prepTime: number;
+  difficulty: Difficulty;
+  servings: number;
+}) {
+  try {
+    const recipe = await prisma.recipe.create({
+      data,
+    });
+    revalidatePath("/");
+    console.log("Recette créée:", recipe.id);
+    return recipe;
+  } catch (error) {
+    console.error("Erreur lors de la création de la recette:", error);
+    throw new Error("Erreur lors de la création de la recette");
   }
+}
 
-  return response.json();
+// Mettre à jour une recette
+export async function updateRecipe(
+  id: string,
+  data: {
+    title?: string;
+    description?: string;
+    image?: string;
+    prepTime?: number;
+    difficulty?: Difficulty;
+    servings?: number;
+  },
+) {
+  try {
+    const recipe = await prisma.recipe.update({
+      where: { id },
+      data,
+    });
+    revalidatePath("/");
+    console.log("Recette mise à jour:", recipe.id);
+    return recipe;
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour de la recette:", error);
+    throw new Error("Erreur lors de la mise à jour de la recette");
+  }
 }
 
 // Supprimer une recette
-export async function deleteRecipeById(id: number): Promise<boolean> {
-  const response = await fetch(`${API_BASE_URL}/${id}`, {
-    method: "DELETE",
-  });
-
-  if (!response.ok) {
-    if (response.status === 404) return false;
-    throw new Error("Erreur lors de la suppression de la recette");
+export async function deleteRecipe(id: string) {
+  try {
+    await prisma.recipe.delete({
+      where: { id },
+    });
+    revalidatePath("/");
+    console.log("Recette supprimée:", id);
+    return true;
+  } catch (error) {
+    console.error("Erreur lors de la suppression de la recette:", error);
+    return false;
   }
-
-  return true;
 }

@@ -14,9 +14,10 @@ import { notFound } from "next/navigation";
 export default async function RecipeByIdPage({
   params,
 }: {
-  params: { recipeID: string };
+  params: Promise<{ recipeID: string }>;
 }) {
-  const recipe = await getRecipeById(parseInt(params.recipeID, 10));
+  const { recipeID } = await params;
+  const recipe = await getRecipeById(recipeID);
   if (!recipe) {
     notFound();
   }
