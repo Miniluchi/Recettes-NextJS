@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/sonner";
 import { Home, List, Plus } from "lucide-react";
 import Link from "next/link";
 import "./globals.css";
@@ -29,6 +30,7 @@ export default function RootLayout({
           </Button>
         </nav>
         {children}
+        <Toaster />
       </body>
     </html>
   );
