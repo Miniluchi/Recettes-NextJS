@@ -3,11 +3,12 @@
 import { prisma } from "@/lib/prisma";
 import { Difficulty } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { Recipe } from "@prisma/client";
 
 // Récupérer toutes les recettes
-export async function getAllRecipes() {
+export async function getAllRecipes(): Promise<Recipe[]> {
   try {
-    const recipes = await prisma.recipe.findMany({
+    const recipes: Recipe[] = await prisma.recipe.findMany({
       orderBy: { createdAt: "desc" },
     });
     return recipes;
@@ -18,9 +19,9 @@ export async function getAllRecipes() {
 }
 
 // Récupérer une recette par ID
-export async function getRecipeById(id: string) {
+export async function getRecipeById(id: string): Promise<Recipe | null> {
   try {
-    const recipe = await prisma.recipe.findUnique({
+    const recipe: Recipe | null = await prisma.recipe.findUnique({
       where: { id },
     });
     return recipe;
@@ -38,9 +39,9 @@ export async function createRecipe(data: {
   prepTime: number;
   difficulty: Difficulty;
   servings: number;
-}) {
+}): Promise<Recipe> {
   try {
-    const recipe = await prisma.recipe.create({
+    const recipe: Recipe = await prisma.recipe.create({
       data,
     });
     revalidatePath("/");
@@ -63,9 +64,9 @@ export async function updateRecipe(
     difficulty?: Difficulty;
     servings?: number;
   },
-) {
+): Promise<Recipe> {
   try {
-    const recipe = await prisma.recipe.update({
+    const recipe: Recipe = await prisma.recipe.update({
       where: { id },
       data,
     });
@@ -79,7 +80,7 @@ export async function updateRecipe(
 }
 
 // Supprimer une recette
-export async function deleteRecipe(id: string) {
+export async function deleteRecipe(id: string): Promise<boolean> {
   try {
     await prisma.recipe.delete({
       where: { id },

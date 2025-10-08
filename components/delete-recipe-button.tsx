@@ -31,7 +31,7 @@ export function DeleteRecipeButton({ recipeId }: { recipeId: string }) {
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      const success = await deleteRecipe(recipeId);
+      const success: boolean = await deleteRecipe(recipeId);
       if (success) {
         toast.success("Recette supprimée", {
           description: "La recette a été supprimée avec succès",

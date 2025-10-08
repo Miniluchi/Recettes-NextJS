@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Recipe } from "@prisma/client";
 import { ChefHat, Clock, Users } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -18,7 +19,7 @@ export default async function RecipeByIdPage({
   params: Promise<{ recipeID: string }>;
 }) {
   const { recipeID } = await params;
-  const recipe = await getRecipeById(recipeID);
+  const recipe: Recipe | null = await getRecipeById(recipeID);
   if (!recipe) {
     notFound();
   }

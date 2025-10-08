@@ -1,12 +1,8 @@
+import { Recipe } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-import { Recipe } from "../app/types";
 
-interface RecipeCardProps {
-  recipe: Recipe;
-}
-
-export default function RecipeCard({ recipe }: RecipeCardProps) {
+export default function RecipeCard({ recipe }: { recipe: Recipe }) {
   return (
     <Link
       href={`/recipes/${recipe.id}`}
