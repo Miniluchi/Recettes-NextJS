@@ -10,6 +10,7 @@ import {
 import { ChefHat, Clock, Users } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { DeleteRecipeButton } from "../../../components/delete-recipe-button";
 
 export default async function RecipeByIdPage({
   params,
@@ -43,28 +44,32 @@ export default async function RecipeByIdPage({
               />
             </div>
 
-            <div className="flex flex-wrap gap-4">
-              <Badge
-                variant="secondary"
-                className="flex items-center gap-2 px-4 py-2"
-              >
-                <Clock className="h-4 w-4" />
-                {recipe.prepTime} min
-              </Badge>
-              <Badge
-                variant="secondary"
-                className="flex items-center gap-2 px-4 py-2"
-              >
-                <ChefHat className="h-4 w-4" />
-                {recipe.difficulty}
-              </Badge>
-              <Badge
-                variant="secondary"
-                className="flex items-center gap-2 px-4 py-2"
-              >
-                <Users className="h-4 w-4" />
-                {recipe.servings} personnes
-              </Badge>
+            <div className="flex flex-wrap gap-4 items-center justify-between">
+              <div className="flex flex-wrap gap-4">
+                <Badge
+                  variant="secondary"
+                  className="flex items-center gap-2 px-4 py-2"
+                >
+                  <Clock className="h-4 w-4" />
+                  {recipe.prepTime} min
+                </Badge>
+                <Badge
+                  variant="secondary"
+                  className="flex items-center gap-2 px-4 py-2"
+                >
+                  <ChefHat className="h-4 w-4" />
+                  {recipe.difficulty}
+                </Badge>
+                <Badge
+                  variant="secondary"
+                  className="flex items-center gap-2 px-4 py-2"
+                >
+                  <Users className="h-4 w-4" />
+                  {recipe.servings} personnes
+                </Badge>
+              </div>
+
+              <DeleteRecipeButton recipeId={recipe.id} />
             </div>
           </CardContent>
         </Card>
