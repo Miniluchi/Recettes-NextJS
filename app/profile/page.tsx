@@ -1,10 +1,9 @@
-import { Badge } from "@/components/ui/badge";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import { authOptions } from "@/lib/authOptions";
 import { Calendar, Mail, User as UserIcon } from "lucide-react";
@@ -26,9 +25,7 @@ export default async function ProfilePage() {
         <Card>
           <CardHeader>
             <CardTitle className="text-3xl">Profil</CardTitle>
-            <CardDescription>
-              Vos informations personnelles
-            </CardDescription>
+            <CardDescription>Vos informations personnelles</CardDescription>
           </CardHeader>
 
           <CardContent className="space-y-6">
@@ -54,7 +51,6 @@ export default async function ProfilePage() {
                 <p className="text-sm text-muted-foreground">Email</p>
                 <p className="font-medium text-lg">{user.email}</p>
               </div>
-              <Badge variant="secondary">Vérifié</Badge>
             </div>
 
             {/* Informations supplémentaires */}
