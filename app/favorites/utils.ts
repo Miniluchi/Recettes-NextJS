@@ -1,28 +1,9 @@
 "use server";
 
+import { getCurrentUser, UserSession } from "@/app/utils";
 import { prisma } from "@/lib/prisma";
-import { Favorite, Recipe, User } from "@prisma/client";
-import { getServerSession } from "next-auth";
+import { Favorite, Recipe } from "@prisma/client";
 import { revalidatePath } from "next/cache";
-
-export interface UserSession {
-  id: string;
-  email: string;
-}
-// Helper pour récupérer l'utilisateur connecté
-async function getCurrentUser(): Promise<UserSession | null> {
-  const session = await getServerSession();
-
-  if (!session?.user?.email) {
-    return null;
-  }
-
-  const user: User | null = await prisma.user.findUnique({
-    where: { email: session.user.email },
-  });
-
-  return user;
-}
 
 // Ajouter une recette aux favoris
 export async function addToFavorites(
