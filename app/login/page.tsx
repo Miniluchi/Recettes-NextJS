@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -108,6 +109,18 @@ export default function LoginPage() {
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? "Connexion..." : "Se connecter"}
             </Button>
+
+            <div className="text-center mt-4">
+              <p className="text-sm text-muted-foreground">
+                Pas encore de compte ?{" "}
+                <Link
+                  href="/register"
+                  className="text-primary hover:underline font-medium"
+                >
+                  Créer un compte
+                </Link>
+              </p>
+            </div>
           </form>
         </CardContent>
       </Card>
