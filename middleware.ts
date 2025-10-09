@@ -2,7 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 // Routes qui nécessitent une authentification
-const protectedRoutes = ["/recipes/new", "/favorites"];
+const protectedRoutes = ["/recipes/new", "/favorites", "/profile"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;

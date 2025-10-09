@@ -1,6 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
@@ -8,7 +13,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { DoorOpen, Heart, Home, List, LogIn, Plus } from "lucide-react";
+import { DoorOpen, Heart, Home, List, LogIn, Plus, User } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -101,21 +106,42 @@ export function Navbar() {
         </Tooltip>
 
         {session ? (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full"
-                onClick={handleLogout}
-              >
-                <DoorOpen className="h-4 w-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Se déconnecter</p>
-            </TooltipContent>
-          </Tooltip>
+          <Popover>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" size="icon" className="rounded-full">
+                    <User className="h-4 w-4" />
+                  </Button>
+                </PopoverTrigger>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Mon compte</p>
+              </TooltipContent>
+            </Tooltip>
+            <PopoverContent className="w-56 p-2" align="end">
+              <div className="space-y-1">
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start"
+                  asChild
+                >
+                  <Link href="/profile">
+                    <User className="h-4 w-4 mr-2" />
+                    Accéder au profil
+                  </Link>
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start text-destructive hover:text-destructive"
+                  onClick={handleLogout}
+                >
+                  <DoorOpen className="h-4 w-4 mr-2" />
+                  Se déconnecter
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
         ) : (
           <Tooltip>
             <TooltipTrigger asChild>
