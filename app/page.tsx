@@ -2,6 +2,7 @@ import { getUserFavoriteIds } from "@/app/favorites/utils";
 import { getAllRecipes } from "@/app/recipes/utils";
 import RecipeCard from "@/components/recipeCard";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { Recipe } from "@prisma/client";
 import Link from "next/link";
 
@@ -29,12 +30,14 @@ export default async function Home() {
       </div>
 
       <div className="flex justify-center">
-        <Button variant="secondary">
-          <Link href="/recipes">Voir toutes les recettes →</Link>
-        </Button>
-        <Button className="ml-4">
-          <Link href="/recipes/new">Ajouter une recette</Link>
-        </Button>
+        <ButtonGroup>
+          <Button variant="secondary" asChild>
+            <Link href="/recipes">Voir toutes les recettes →</Link>
+          </Button>
+          <Button asChild>
+            <Link href="/recipes/new">Ajouter une recette</Link>
+          </Button>
+        </ButtonGroup>
       </div>
     </div>
   );
