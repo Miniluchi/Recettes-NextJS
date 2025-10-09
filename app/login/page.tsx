@@ -10,16 +10,47 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { login } from "./utils";
+
+/**
+ * Récupère un cookie par son nom
+ */
+function getCookie(name: string): string | null {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(";").shift() ?? null;
+  return null;
+}
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const hasShownToast = useRef(false);
+
+  // Afficher le toast si un message est présent dans le cookie
+  useEffect(() => {
+    const message = getCookie("auth-message");
+
+    if (message && !hasShownToast.current) {
+      hasShownToast.current = true;
+
+      // Petit délai pour s'assurer que le Toaster est monté
+      setTimeout(() => {
+        toast.error("Authentification requise", {
+          description: decodeURIComponent(message),
+        });
+      }, 100);
+
+      // Supprimer le cookie après l'avoir lu
+      document.cookie = "auth-message=; path=/; max-age=0";
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +62,9 @@ export default function LoginPage() {
       toast.success("Connexion réussie", {
         description: "Vous êtes maintenant connecté",
       });
-      router.push("/");
+      // Rediriger vers la page d'origine ou la home
+      const callbackUrl = searchParams.get("callbackUrl") || "/";
+      router.push(callbackUrl);
     } else {
       toast.error("Erreur de connexion", {
         description: result.error || "Identifiants incorrects",

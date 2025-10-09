@@ -1,16 +1,36 @@
+"use client";
+
 import RecipeCard from "@/components/recipeCard";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import { Recipe } from "@prisma/client";
+import { useEffect, useState } from "react";
 import { getUserFavorites } from "./utils";
 
-export default async function FavoritesPage() {
-  const session = await getServerSession();
+export default function FavoritesPage() {
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  if (!session?.user?.email) {
-    redirect("/login");
+  useEffect(() => {
+    getUserFavorites()
+      .then((data) => {
+        setRecipes(data);
+      })
+      .catch((error) => {
+        console.error("Erreur lors du chargement des favoris:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center text-muted-foreground">
+          Chargement de vos favoris...
+        </div>
+      </div>
+    );
   }
-
-  const recipes = await getUserFavorites();
 
   return (
     <div className="container mx-auto px-4 py-8">

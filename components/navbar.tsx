@@ -82,25 +82,23 @@ export function Navbar() {
 
         <Separator orientation="vertical" className="h-8 mx-2" />
 
-        {session && (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full"
-                asChild
-              >
-                <Link href="/favorites">
-                  <Heart className="h-4 w-4" />
-                </Link>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Favoris</p>
-            </TooltipContent>
-          </Tooltip>
-        )}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full"
+              asChild
+            >
+              <Link href="/favorites">
+                <Heart className="h-4 w-4" />
+              </Link>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Favoris</p>
+          </TooltipContent>
+        </Tooltip>
 
         {session ? (
           <Tooltip>
