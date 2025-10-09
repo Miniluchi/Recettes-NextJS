@@ -8,7 +8,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { DoorOpen, Home, List, LogIn, Plus } from "lucide-react";
+import { DoorOpen, Heart, Home, List, LogIn, Plus } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -81,6 +81,26 @@ export function Navbar() {
         </Tooltip>
 
         <Separator orientation="vertical" className="h-8 mx-2" />
+
+        {session && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full"
+                asChild
+              >
+                <Link href="/favorites">
+                  <Heart className="h-4 w-4" />
+                </Link>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Favoris</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
 
         {session ? (
           <Tooltip>

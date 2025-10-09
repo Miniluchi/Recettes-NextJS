@@ -1,3 +1,4 @@
+import { getUserFavoriteIds } from "@/app/favorites/utils";
 import { getAllRecipes } from "@/app/recipes/utils";
 import RecipeCard from "@/components/recipeCard";
 import { Button } from "@/components/ui/button";
@@ -6,6 +7,8 @@ import Link from "next/link";
 
 export default async function Home() {
   const recipes: Recipe[] = await getAllRecipes();
+  const favoriteIds = await getUserFavoriteIds();
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
@@ -17,7 +20,11 @@ export default async function Home() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         {recipes.slice(0, 3).map((recipe: Recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
+          <RecipeCard
+            key={recipe.id}
+            recipe={recipe}
+            isFavorite={favoriteIds.has(recipe.id)}
+          />
         ))}
       </div>
 

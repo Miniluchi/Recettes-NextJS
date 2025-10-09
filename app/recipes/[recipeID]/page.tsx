@@ -1,3 +1,4 @@
+import { isFavorite } from "@/app/favorites/utils";
 import { getRecipeById } from "@/app/recipes/utils";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -12,6 +13,7 @@ import { ChefHat, Clock, Users } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { DeleteRecipeButton } from "../../../components/delete-recipe-button";
+import FavoriteButton from "../../../components/favoriteButton";
 
 export default async function RecipeByIdPage({
   params,
@@ -23,6 +25,8 @@ export default async function RecipeByIdPage({
   if (!recipe) {
     notFound();
   }
+
+  const isFav = await isFavorite(recipeID);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -70,7 +74,10 @@ export default async function RecipeByIdPage({
                 </Badge>
               </div>
 
-              <DeleteRecipeButton recipeId={recipe.id} />
+              <div className="flex items-center gap-2">
+                <FavoriteButton recipeId={recipe.id} isFavorite={isFav} />
+                <DeleteRecipeButton recipeId={recipe.id} />
+              </div>
             </div>
           </CardContent>
         </Card>
