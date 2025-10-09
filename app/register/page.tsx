@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { register } from "./utils";
@@ -81,6 +82,7 @@ export default function RegisterPage() {
               />
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading && <Spinner className="mr-2" />}
               {isLoading ? "Inscription..." : "S'inscrire"}
             </Button>
           </form>

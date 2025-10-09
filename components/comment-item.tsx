@@ -17,6 +17,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { Edit, Save, Trash2, X } from "lucide-react";
 import { useState } from "react";
@@ -126,7 +127,11 @@ export function CommentItem({ comment, currentUserId }: CommentItemProps) {
                 />
                 <div className="flex gap-2">
                   <Button size="sm" onClick={handleSave} disabled={isLoading}>
-                    <Save className="h-4 w-4 mr-1" />
+                    {isLoading ? (
+                      <Spinner className="h-4 w-4 mr-1" />
+                    ) : (
+                      <Save className="h-4 w-4 mr-1" />
+                    )}
                     Enregistrer
                   </Button>
                   <Button
@@ -180,11 +185,13 @@ export function CommentItem({ comment, currentUserId }: CommentItemProps) {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Annuler</AlertDialogCancel>
+            <AlertDialogCancel disabled={isLoading}>Annuler</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
+              disabled={isLoading}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
+              {isLoading && <Spinner className="h-4 w-4 mr-2" />}
               Supprimer
             </AlertDialogAction>
           </AlertDialogFooter>

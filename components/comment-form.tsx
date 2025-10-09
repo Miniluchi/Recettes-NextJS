@@ -4,6 +4,7 @@ import { createComment } from "@/app/recipes/utils";
 import { StarRating } from "@/components/star-rating";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -53,9 +54,7 @@ export function CommentForm({ recipeId, userId }: CommentFormProps) {
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="text-sm font-medium mb-2 block">
-              Votre note
-            </label>
+            <label className="text-sm font-medium mb-2 block">Votre note</label>
             <StarRating
               rating={rating}
               onRatingChange={setRating}
@@ -78,6 +77,7 @@ export function CommentForm({ recipeId, userId }: CommentFormProps) {
           </div>
 
           <Button type="submit" disabled={isLoading}>
+            {isLoading && <Spinner className="mr-2" />}
             {isLoading ? "Envoi en cours..." : "Publier le commentaire"}
           </Button>
         </form>

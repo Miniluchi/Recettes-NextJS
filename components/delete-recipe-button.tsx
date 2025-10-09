@@ -13,6 +13,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -73,8 +74,9 @@ export function DeleteRecipeButton({ recipeId }: { recipeId: string }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Annuler</AlertDialogCancel>
+          <AlertDialogCancel disabled={isDeleting}>Annuler</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isDeleting}>
+            {isDeleting && <Spinner className="h-4 w-4 mr-2" />}
             {isDeleting ? "Suppression..." : "Supprimer"}
           </AlertDialogAction>
         </AlertDialogFooter>

@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { Difficulty } from "@prisma/client";
 import { Upload, X } from "lucide-react";
@@ -277,6 +278,7 @@ export default function NewRecipePage() {
                 Annuler
               </Button>
               <Button type="submit" className="flex-1" disabled={isUploading}>
+                {isUploading && <Spinner className="mr-2" />}
                 {isUploading ? "Upload en cours..." : "Créer la recette"}
               </Button>
             </div>
