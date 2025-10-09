@@ -1,5 +1,9 @@
 import { isFavorite } from "@/app/favorites/utils";
-import { getRecipeById } from "@/app/recipes/utils";
+import {
+  getAverageRating,
+  getCommentsByRecipeId,
+  getRecipeById,
+} from "@/app/recipes/utils";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -8,10 +12,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { authOptions } from "@/lib/authOptions";
 import { Recipe } from "@prisma/client";
 import { ChefHat, Clock, Users } from "lucide-react";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { CommentForm } from "../../../components/comment-form";
+import { CommentList } from "../../../components/comment-list";
 import { DeleteRecipeButton } from "../../../components/delete-recipe-button";
 import FavoriteButton from "../../../components/favoriteButton";
 
@@ -26,7 +34,10 @@ export default async function RecipeByIdPage({
     notFound();
   }
 
+  const session = await getServerSession(authOptions);
   const isFav = await isFavorite(recipeID);
+  const comments = await getCommentsByRecipeId(recipeID);
+  const averageRating = await getAverageRating(recipeID);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -81,6 +92,21 @@ export default async function RecipeByIdPage({
             </div>
           </CardContent>
         </Card>
+
+        {/* Section des commentaires */}
+        <div className="mt-8 space-y-6">
+          {/* Liste des commentaires */}
+          <CommentList
+            comments={comments}
+            currentUserId={session?.user?.id}
+            averageRating={averageRating}
+          />
+
+          {/* Formulaire d'ajout de commentaire (uniquement si connecté) */}
+          {session?.user?.id && (
+            <CommentForm recipeId={recipeID} userId={session.user.id} />
+          )}
+        </div>
       </div>
     </div>
   );
