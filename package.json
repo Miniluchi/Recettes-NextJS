@@ -9,9 +9,8 @@
     "lint": "eslint",
     "prisma:generate": "prisma generate --schema=./prisma/schema-postgres.prisma",
     "prisma:migrate": "prisma migrate dev --schema=./prisma/schema-postgres.prisma",
-    "prisma:seed": "tsx prisma/seed.ts",
-    "r2:migrate": "tsx scripts/migrate-images-to-r2.ts",
-    "r2:update-urls": "tsx scripts/update-image-urls.ts"
+    "prisma:sync": "prisma generate --schema=./prisma/schema-postgres.prisma && prisma migrate dev --schema=./prisma/schema-postgres.prisma",
+    "prisma:studio": "prisma studio --schema=./prisma/schema-postgres.prisma"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",
