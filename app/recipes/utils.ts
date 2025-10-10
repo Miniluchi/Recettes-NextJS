@@ -100,6 +100,7 @@ export type CommentWithUser = Comment & {
     id: string;
     name: string | null;
     email: string;
+    avatar: string | null;
   };
 };
 
@@ -116,6 +117,7 @@ export async function getCommentsByRecipeId(
             id: true,
             name: true,
             email: true,
+            avatar: true,
           },
         },
       },

@@ -4,6 +4,7 @@ import {
   getCommentsByRecipeId,
   getRecipeById,
 } from "@/app/recipes/utils";
+import { getCurrentUser } from "@/app/utils";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -12,10 +13,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { authOptions } from "@/lib/authOptions";
 import { Recipe } from "@prisma/client";
 import { ChefHat, Clock, Users } from "lucide-react";
-import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { CommentForm } from "../../../components/comment-form";
@@ -34,7 +33,7 @@ export default async function RecipeByIdPage({
     notFound();
   }
 
-  const session = await getServerSession(authOptions);
+  const currentUser = await getCurrentUser();
   const isFav = await isFavorite(recipeID);
   const comments = await getCommentsByRecipeId(recipeID);
   const averageRating = await getAverageRating(recipeID);
@@ -98,13 +97,19 @@ export default async function RecipeByIdPage({
           {/* Liste des commentaires */}
           <CommentList
             comments={comments}
-            currentUserId={session?.user?.id}
+            currentUserId={currentUser?.id}
             averageRating={averageRating}
           />
 
           {/* Formulaire d'ajout de commentaire (uniquement si connecté) */}
-          {session?.user?.id && (
-            <CommentForm recipeId={recipeID} userId={session.user.id} />
+          {currentUser && (
+            <CommentForm
+              recipeId={recipeID}
+              userId={currentUser.id}
+              userName={currentUser.name}
+              userEmail={currentUser.email}
+              userAvatar={currentUser.avatar}
+            />
           )}
         </div>
       </div>

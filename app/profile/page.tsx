@@ -1,3 +1,4 @@
+import { getCurrentUser } from "@/app/utils";
 import {
   Card,
   CardContent,
@@ -5,19 +6,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { authOptions } from "@/lib/authOptions";
 import { Calendar, Mail, User as UserIcon } from "lucide-react";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { AvatarUpload } from "./avatar-upload";
 
 export default async function ProfilePage() {
-  const session = await getServerSession(authOptions);
+  const user = await getCurrentUser();
 
-  if (!session?.user) {
+  if (!user) {
     redirect("/login");
   }
-
-  const user = session.user;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -29,6 +27,14 @@ export default async function ProfilePage() {
           </CardHeader>
 
           <CardContent className="space-y-6">
+            {/* Avatar */}
+            <div className="flex justify-center py-4 border-b">
+              <AvatarUpload
+                currentAvatar={user.avatar}
+                userName={user.name}
+                userEmail={user.email}
+              />
+            </div>
             {/* Nom */}
             <div className="flex items-center gap-4 p-4 border rounded-lg">
               <div className="p-2 bg-primary/10 rounded-full">

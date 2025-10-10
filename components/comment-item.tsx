@@ -16,9 +16,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
+import { getUserInitials } from "@/lib/utils";
 import { Edit, Save, Trash2, X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -83,71 +85,86 @@ export function CommentItem({ comment, currentUserId }: CommentItemProps) {
     <>
       <div className="border rounded-lg p-4 bg-card">
         <div className="flex items-start justify-between gap-4">
-          <div className="flex-1">
-            {/* En-tête avec nom et date */}
-            <div className="flex items-center gap-2 mb-2">
-              <p className="font-semibold text-sm">
-                {comment.user.name || comment.user.email}
-              </p>
-              <span className="text-xs text-muted-foreground">
-                {new Date(comment.createdAt).toLocaleDateString("fr-FR", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
-              </span>
-              {comment.updatedAt.getTime() !== comment.createdAt.getTime() && (
-                <span className="text-xs text-muted-foreground italic">
-                  (modifié)
+          <div className="flex items-start gap-3 flex-1">
+            {/* Avatar */}
+            <Avatar className="h-10 w-10 mt-1">
+              <AvatarImage
+                src={comment.user.avatar || undefined}
+                alt={comment.user.name || comment.user.email}
+              />
+              <AvatarFallback>
+                {getUserInitials(comment.user.name, comment.user.email)}
+              </AvatarFallback>
+            </Avatar>
+
+            {/* Contenu du commentaire */}
+            <div className="flex-1">
+              {/* En-tête avec nom et date */}
+              <div className="flex items-center gap-2 mb-2">
+                <p className="font-semibold text-sm">
+                  {comment.user.name || comment.user.email}
+                </p>
+                <span className="text-xs text-muted-foreground">
+                  {new Date(comment.createdAt).toLocaleDateString("fr-FR", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
                 </span>
-              )}
-            </div>
-
-            {/* Note */}
-            <div className="mb-3">
-              {isEditing ? (
-                <StarRating
-                  rating={editedRating}
-                  onRatingChange={setEditedRating}
-                  interactive={true}
-                />
-              ) : (
-                <StarRating rating={comment.rating} interactive={false} />
-              )}
-            </div>
-
-            {/* Contenu */}
-            {isEditing ? (
-              <div className="space-y-2">
-                <Textarea
-                  value={editedContent}
-                  onChange={(e) => setEditedContent(e.target.value)}
-                  className="min-h-[80px]"
-                  disabled={isLoading}
-                />
-                <div className="flex gap-2">
-                  <Button size="sm" onClick={handleSave} disabled={isLoading}>
-                    {isLoading ? (
-                      <Spinner className="h-4 w-4 mr-1" />
-                    ) : (
-                      <Save className="h-4 w-4 mr-1" />
-                    )}
-                    Enregistrer
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={handleCancel}
-                    disabled={isLoading}
-                  >
-                    <X className="h-4 w-4 mr-1" />
-                    Annuler
-                  </Button>
-                </div>
+                {comment.updatedAt.getTime() !==
+                  comment.createdAt.getTime() && (
+                  <span className="text-xs text-muted-foreground italic">
+                    (modifié)
+                  </span>
+                )}
               </div>
-            ) : (
-              <p className="text-sm whitespace-pre-wrap">{comment.content}</p>
-            )}
+
+              {/* Note */}
+              <div className="mb-3">
+                {isEditing ? (
+                  <StarRating
+                    rating={editedRating}
+                    onRatingChange={setEditedRating}
+                    interactive={true}
+                  />
+                ) : (
+                  <StarRating rating={comment.rating} interactive={false} />
+                )}
+              </div>
+
+              {/* Contenu */}
+              {isEditing ? (
+                <div className="space-y-2">
+                  <Textarea
+                    value={editedContent}
+                    onChange={(e) => setEditedContent(e.target.value)}
+                    className="min-h-[80px]"
+                    disabled={isLoading}
+                  />
+                  <div className="flex gap-2">
+                    <Button size="sm" onClick={handleSave} disabled={isLoading}>
+                      {isLoading ? (
+                        <Spinner className="h-4 w-4 mr-1" />
+                      ) : (
+                        <Save className="h-4 w-4 mr-1" />
+                      )}
+                      Enregistrer
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={handleCancel}
+                      disabled={isLoading}
+                    >
+                      <X className="h-4 w-4 mr-1" />
+                      Annuler
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-sm whitespace-pre-wrap">{comment.content}</p>
+              )}
+            </div>
           </div>
 
           {/* Boutons d'action (uniquement si propriétaire) */}
