@@ -1,5 +1,5 @@
 import { getUserFavoriteIds } from "@/app/favorites/utils";
-import RecipeFilters from "@/components/recipeFilters";
+import RecipeFilters from "@/components/recipes/recipeFilters";
 import { Recipe } from "@prisma/client";
 import { getAllRecipes } from "./utils";
 

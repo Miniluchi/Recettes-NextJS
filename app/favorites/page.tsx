@@ -1,6 +1,6 @@
 "use client";
 
-import RecipeCard from "@/components/recipeCard";
+import RecipeCard from "@/components/recipes/recipeCard";
 import { Recipe } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { getUserFavorites } from "./utils";

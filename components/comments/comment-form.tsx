@@ -1,7 +1,7 @@
 "use client";
 
 import { createComment } from "@/app/recipes/utils";
-import { StarRating } from "@/components/star-rating";
+import { StarRating } from "@/components/recipes/star-rating";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { getUserInitials } from "@/lib/utils";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 type CommentFormProps = {
   recipeId: string;

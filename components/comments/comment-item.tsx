@@ -5,7 +5,7 @@ import {
   deleteComment,
   updateComment,
 } from "@/app/recipes/utils";
-import { StarRating } from "@/components/star-rating";
+import { StarRating } from "@/components/recipes/star-rating";
 import {
   AlertDialog,
   AlertDialogAction,

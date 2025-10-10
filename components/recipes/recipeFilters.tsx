@@ -3,18 +3,18 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Recipe } from "@prisma/client";
 import { Filter, X } from "lucide-react";
 import { useMemo, useState } from "react";
+import { Button } from "../ui/button";
 import RecipeCard from "./recipeCard";
-import { Button } from "./ui/button";
 
 interface RecipeFiltersProps {
   recipes: Recipe[];
@@ -59,10 +59,7 @@ export default function RecipeFilters({
       const matchesServings = recipe.servings >= minServings;
 
       return (
-        matchesSearch &&
-        matchesDifficulty &&
-        matchesPrepTime &&
-        matchesServings
+        matchesSearch && matchesDifficulty && matchesPrepTime && matchesServings
       );
     });
   }, [recipes, searchQuery, difficultyFilter, maxPrepTime, minServings]);
@@ -119,7 +116,10 @@ export default function RecipeFilters({
           {/* Difficulté */}
           <div className="space-y-2">
             <Label htmlFor="difficulty">Difficulté</Label>
-            <Select value={difficultyFilter} onValueChange={setDifficultyFilter}>
+            <Select
+              value={difficultyFilter}
+              onValueChange={setDifficultyFilter}
+            >
               <SelectTrigger id="difficulty">
                 <SelectValue placeholder="Toutes" />
               </SelectTrigger>
@@ -134,9 +134,7 @@ export default function RecipeFilters({
 
           {/* Temps de préparation */}
           <div className="space-y-2">
-            <Label htmlFor="prepTime">
-              Temps max : {maxPrepTime[0]} min
-            </Label>
+            <Label htmlFor="prepTime">Temps max : {maxPrepTime[0]} min</Label>
             <Slider
               id="prepTime"
               min={prepTimeRange.min}
@@ -167,7 +165,8 @@ export default function RecipeFilters({
       {/* Résultats */}
       <div className="flex items-center justify-between">
         <p className="text-muted-foreground">
-          {filteredRecipes.length} recette{filteredRecipes.length > 1 ? "s" : ""}{" "}
+          {filteredRecipes.length} recette
+          {filteredRecipes.length > 1 ? "s" : ""}{" "}
           {hasActiveFilters && `sur ${recipes.length}`}
         </p>
       </div>

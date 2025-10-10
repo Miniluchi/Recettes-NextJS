@@ -1,4 +1,4 @@
-import FavoriteButton from "@/components/favoriteButton";
+import FavoriteButton from "@/components/recipes/favoriteButton";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Recipe } from "@prisma/client";

@@ -1,4 +1,4 @@
-import RecipeCardSkeleton from "@/components/recipeCardSkeleton";
+import RecipeCardSkeleton from "@/components/recipes/recipeCardSkeleton";
 
 export default function RecipesLoading() {
   return (

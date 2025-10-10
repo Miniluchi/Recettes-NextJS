@@ -1,8 +1,8 @@
 "use client";
 
 import { CommentWithUser } from "@/app/recipes/utils";
-import { CommentItem } from "@/components/comment-item";
-import { StarRating } from "@/components/star-rating";
+import { CommentItem } from "@/components/comments/comment-item";
+import { StarRating } from "@/components/recipes/star-rating";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type CommentListProps = {

@@ -1,6 +1,6 @@
 import { getUserFavoriteIds } from "@/app/favorites/utils";
 import { getAllRecipes } from "@/app/recipes/utils";
-import RecipeCard from "@/components/recipeCard";
+import RecipeCard from "@/components/recipes/recipeCard";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Recipe } from "@prisma/client";

@@ -17,10 +17,10 @@ import { Recipe } from "@prisma/client";
 import { ChefHat, Clock, Users } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { CommentForm } from "../../../components/comment-form";
-import { CommentList } from "../../../components/comment-list";
-import { DeleteRecipeButton } from "../../../components/delete-recipe-button";
-import FavoriteButton from "../../../components/favoriteButton";
+import { CommentForm } from "../../../components/comments/comment-form";
+import { CommentList } from "../../../components/comments/comment-list";
+import { DeleteRecipeButton } from "../../../components/recipes/delete-recipe-button";
+import FavoriteButton from "../../../components/recipes/favoriteButton";
 
 export default async function RecipeByIdPage({
   params,
