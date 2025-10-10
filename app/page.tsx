@@ -31,7 +31,7 @@ export default async function Home() {
 
       <div className="flex justify-center">
         <ButtonGroup>
-          <Button variant="secondary" asChild>
+          <Button variant="outline" asChild>
             <Link href="/recipes">Voir toutes les recettes →</Link>
           </Button>
           <Button asChild>
