@@ -40,8 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-#prisma
+# prisma
 /prisma/migrations/
 
-#Claude code
+# Claude code
 CLAUDE.md
